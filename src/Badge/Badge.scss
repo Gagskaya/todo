@@ -1,0 +1,23 @@
+.badge {
+    display: inline-block;
+    position: relative;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 25px;
+    &--green {
+        background: #42B883;
+    }
+    &--blue {
+        background: #64C4ED;
+    }
+    &--pink {
+        background: #FFBBCC;
+    }
+    &--lightgreen {
+        background: #B6E6BD;
+    }
+    &--grey {
+        background: #C9D1D3;
+    }
+}
