@@ -1,26 +1,18 @@
-.list {
-    &__add-btn {
-     opacity: 0.4;
-     &:hover {
-         opacity: 1;
-     }
-    }                     
-    margin-bottom:30px ;
-        li {
-        display: flex;
-        align-items: center;
-        padding: 10px 12px;
-        cursor: pointer;
-        &.active {
-            background: #FFFFFF;
-            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
-            border-radius: 4px;
+.todo__list li {
+    display: flex;
+    margin-bottom: 5px;
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+        background: rgba(255,255,255,0.5);
+    }
+    i {
+        margin-right: 10px;
+        svg {
+            opacity: 0.6;
         }
         i {
-            display: flex;
-            margin-right: 8px;
+            margin-right: 0;
         }
-     
-
-}
+    }
 }

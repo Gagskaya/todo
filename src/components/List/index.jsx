@@ -1,19 +1,17 @@
 import React from 'react'
+import className from 'classnames'
 import './List.scss'
-import classNames from 'classnames'
-import { Badge } from '../../Badge'
-const List = ({ items, showPopup }) => {
+import { Badge } from '../Badge'
+
+export const List = ({ items, show }) => {
     return (
-        <ul className="list" onClick={showPopup}>
-            {
-                items.map((item, index) => <li key={index} className={classNames(item.className, { 'active': item.active })}>
-                    <i>
-                        {item.icon ? item.icon : <Badge color={item.color}/>}
-                    </i>
+        <ul className="todo__list" onClick={show}>
+            {items.map((item, index) =>
+                <li key={index} className={className(item.active ? 'active' : '')}>
+                    <i>{item.icon ? item.icon : <Badge color={item.color} />}</i>
                     <span>{item.name}</span>
-                </li>)
-            }
+                </li>
+            )}
         </ul>
     )
 }
-export default List;

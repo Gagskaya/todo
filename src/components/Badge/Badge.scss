@@ -1,7 +1,5 @@
 .badge {
     display: inline-block;
-    position: relative;
-    left: 5px;
     width: 10px;
     height: 10px;
     border-radius: 25px;
@@ -19,5 +17,17 @@
     }
     &--grey {
         background: #C9D1D3;
+    }
+    &--purple {
+        background: #C355F5;
+    }
+    &--lime {
+        background: #B6E6BD;
+    }
+    &--black {
+        background: #09011A;
+    }
+    &--red {
+        background: #FF6464;
     }
 }

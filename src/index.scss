@@ -1,9 +1,7 @@
 *,*::after,*::before {
+  font-family: 'Roboto',sans-serif;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif;
-  outline: none;
-  font-style: normal;
   box-sizing: border-box;
 }
 ul {
@@ -20,39 +18,37 @@ a {
   transform: translate(-50%,-50%);
   width: 750px;
   height: 530px;
-  border: 1px solid #f1f1f1;
-  box-shadow: 1px 2px 20px #f3f3f3;
-  border-radius: 10px;
-    &__sidebar {
-     background: #f4f6f8;
-     width: 200px;
-     height: 100%;
-     border-right: 1px #f1f1f1;
-     padding: 60px 20px;
-     font-size: 14px;
-  }
+  border: 1px solid #F1F1F1;
+  box-shadow: 1px 5px 20px #fff;
+  font-size: 14px;
 }
-input[type="text"] {
-  padding: 8px 12px;
-  border: 1px solid #EFEFEF;
+.todo__sidebar {
+  width: 200px;
+  background: #F4F6F8;
+  height: 100%;
+  border-right: 1px solid#F1F1F1;
+  padding: 50px 20px 0 20px;
+  outline: none;
+}
+.active {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+input[type='text'] {
+  padding: 10px;
+  opacity: 0.5;
   width: 100%;
-
   &:hover {
-    border-color: #dbdbdb;
+    opacity: 0.7;
   }
 }
 .btn {
-  // width: 200px;
+  width: 100%;
   padding: 10px;
   background: #4DD599;
   border-radius: 4px;
   color: #fff;
   border: none;
-  cursor: pointer;
-  &:hover {
-    background: darken(#4DD599,6%);
-  }
-  &:active {
-    background: darken(#4DD599,10%);
-  }
+  margin-top: 12px;
 }
