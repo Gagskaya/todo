@@ -1,7 +1,7 @@
 import React from 'react'
 
-import './AddList.scss'
 import { List } from '../List'
+import './AddList.scss'
 import { useState } from 'react'
 import { Badge } from '../Badge'
 import closeSvg from './../../assets/img/close.svg'
@@ -9,17 +9,25 @@ export const AddList = ({ colors, onAdd }) => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedColor, selectColor] = useState(colors[0].id);
     const [inputValue, setInputValue] = useState('');
-
+    const onClose = () => {
+        setShowPopup(false);
+        setInputValue('');
+        selectColor(colors[0].id);
+    }
     const addList = () => {
         if (!inputValue) {
-            alert('Введите название списка');
+            alert('Введите значение');
             return;
         }
         onAdd({
             "id": Math.random(),
-            name: inputValue,
-            "colorId": selectedColor
+            "name": inputValue,
+            "color": colors.find(color => color.id === selectedColor).name,
         })
+        setShowPopup(false);
+        setInputValue('');
+        selectColor(colors[0].id);
+        onClose();
     }
     return (
         <div className="todo__addlist">
@@ -30,27 +38,25 @@ export const AddList = ({ colors, onAdd }) => {
                         <path d="M1 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     ,
-                    name: 'Добавить список'
+                    name: 'Добавить список',
                 }
-            ]} show={() => setShowPopup(true)} />
+            ]}
+                show={() => setShowPopup(!showPopup)}
+            />
             {showPopup && <div className="todo__addlist-popup">
-                <i className="addlist-popup-close" onClick={() => setShowPopup(false)}> <img src={closeSvg} alt="close" />
-                </i>
-                <input onChange={e => {
-                    setInputValue(e.target.value)
-                }} value={inputValue} type="text" placeholder='Название списка' />
-                <div className="todo__addlist-colors">
+                <i className='todo__addlist-popup-close' onClick={onClose}><img src={closeSvg} alt="Кнопка закрыть" /></i>
+                <input onChange={e => setInputValue(e.target.value)} value={inputValue} type="text" placeholder='Название списка' />
+                <div className="todo__addlist-popup-colors">
                     <ul>
                         {
-                            colors.map(color => <li key={color.id}> <Badge color={color.name}
-                                onClick={() => selectColor(color.id)}
-                                className={selectedColor === color.id && 'active'}
-                            /></li>)
+                            colors.map(color => <li key={color.id}><Badge onClick={() => selectColor(color.id)} color={color.name} className={selectedColor === color.id && "active"} /></li>)
                         }
                     </ul>
+
                 </div>
-                <button onClick={addList} className="btn">Добавить</button>
+                <button onClick={addList} className='btn'>Добавить</button>
             </div>}
         </div>
+
     )
 }
