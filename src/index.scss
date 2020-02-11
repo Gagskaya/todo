@@ -6,6 +6,7 @@
 }
 ul {
   list-style: none;
+  
 }
 a {
   color: #fff;
@@ -18,13 +19,14 @@ a {
   left: 50%;
   transform: translate(-50%,-50%);
   width: 750px;
-  height: 530px;
+  min-height: 530px;
   border: 1px solid #F1F1F1;
   box-shadow: 1px 5px 10px #F1F1F1;
   font-size: 14px;
 }
 .todo__sidebar {
   width: 200px;
+  min-height: 530px;
   height: 100%;
   border-right: 1px 5px 10px #F1F1F1;
   background: #E5E5E5;

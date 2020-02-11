@@ -3,6 +3,6 @@ import classNames from 'classnames'
 import './Badge.scss'
 export const Badge = ({ color, onClick, className }) => {
     return (
-        <i onClick={onClick }className={classNames('badge', `badge--${color}`,className)}></i>
+        <i onClick={onClick} className={classNames('badge', `badge--${color}`, className)}></i>
     )
 }

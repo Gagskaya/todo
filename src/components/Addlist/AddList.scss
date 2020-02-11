@@ -1,4 +1,5 @@
 .todo__addlist {
+    margin-top: 40px;
     .todo__list {
         margin-bottom: 15px;
         li {
@@ -11,6 +12,7 @@
         }
     }
     &-popup {
+        top: 0;
         input {
             opacity: 0.5;
         }

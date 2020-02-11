@@ -1,34 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { List } from '../List'
 import './AddList.scss'
-import { useState } from 'react'
-import { Badge } from '../Badge'
 import closeSvg from './../../assets/img/close.svg'
+import { List } from '../List'
+import { Badge } from '../Badge'
+import axios from 'axios'
 export const AddList = ({ colors, onAdd }) => {
     const [showPopup, setShowPopup] = useState(false);
-    const [selectedColor, selectColor] = useState(colors[0].id);
+    const [selectedColor, selectColor] = useState(3);
+    const [isLoading, setIsLoading] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const onAddList = () => {
+        setShowPopup(false);
+        setInputValue('');
+        selectColor(colors[0].id);
+    }
     const onClose = () => {
         setShowPopup(false);
         setInputValue('');
         selectColor(colors[0].id);
-    }
+    };
+    useEffect(() => {
+        if (Array.isArray(colors)) {
+            selectColor(colors[0].id)
+        }
+    }, [colors])
     const addList = () => {
         if (!inputValue) {
             alert('Введите значение');
             return;
-        }
-        onAdd({
-            "id": Math.random(),
+        };
+        setIsLoading(true)
+        axios.post('http://localhost:3001/lists', {
             "name": inputValue,
-            "color": colors.find(color => color.id === selectedColor).name,
+            "colorId": selectedColor
+        }).then(({ data }) => {
+            const color = colors.find(color => color.id === selectedColor).name
+            const listObj = { ...data, color: { name: color } }
+            onAdd(listObj);
+            onAddList();
+            // onClose();
+        }).finally(() => {
+            setIsLoading(false)
         })
-        setShowPopup(false);
-        setInputValue('');
-        selectColor(colors[0].id);
-        onClose();
-    }
+
+    };
     return (
         <div className="todo__addlist">
             <List items={[
@@ -52,9 +68,8 @@ export const AddList = ({ colors, onAdd }) => {
                             colors.map(color => <li key={color.id}><Badge onClick={() => selectColor(color.id)} color={color.name} className={selectedColor === color.id && "active"} /></li>)
                         }
                     </ul>
-
                 </div>
-                <button onClick={addList} className='btn'>Добавить</button>
+                <button onClick={addList} className='btn'>{isLoading ? 'Добавление...' : 'Добавить'}</button>
             </div>}
         </div>
 
