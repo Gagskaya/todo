@@ -1,40 +1,38 @@
-.todo__list {
-  &-remove {
-    opacity: 0;  
-  }
-  cursor: pointer;
-    display: flex;
-    flex-direction: column;
-   li {
-    align-items: center;
-    display: flex;
-    padding: 10px 12px;
-    margin-bottom: 5px;
-    transition: background-color 0.15s ease-in-out;
-
-    &:hover {
-      background: rgba($color: #fff, $alpha: 0.5);
+.list {
+    cursor: pointer;
+    &:first-child {
+        margin-bottom: 20px;
     }
-    &:hover .todo__list-remove {
-      transition: opacity 0.15s ease-in-out;
-      opacity: 0.3;
+    li {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+        &:hover {
+            background: rgba(255,255,255,0.3);
+                .list-remove {
+                    opacity: 0.2;
+                }
+        }
+        i {
+            margin-right: 8px;
+            svg {
+                display: flex;
+                opacity: 0.5;
+            }
+            i {
+                margin-right: 0;
+            }
+        }
+        .list-remove {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            margin-right: 0;
+            opacity: 0;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
     }
-    .todo__list-remove:hover {
-      opacity: 0.8;
-    }
-    span {
-      flex: 1;
-    }
-   }
-   i {
-     margin-right: 10px;
-     display: flex;
-  
-     svg {
-       opacity: 0.5;
-     }
-     i {
-      margin-right: 0;
-     }
-   }
-  }
+}
