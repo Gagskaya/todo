@@ -4,6 +4,8 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  font-size: 14px;
+
 }
 ul {
   list-style: none;
@@ -14,14 +16,19 @@ a {
   text-decoration: none;
 }
 .todo {
-  font-size: 14px;
   width: 750px;
   height: 530px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
-  box-shadow: 1px 5px 20px#F1F1F1;
+  box-shadow: 1px 5px 10px #F1F1F1;
+  &__sidebar {
+    width: 200px;
+    height: 100%;
+    background: #E5E5E5;
+    padding: 60px 20px 0 20px;
+  }
 }
 .active {
   background: #FFFFFF;
@@ -30,10 +37,13 @@ a {
 }
 .btn {
   width: 100%;
-  color: #fff;
-  cursor: pointer;
-  border: none;
+  padding: 10px 0;
   background: #4DD599;
   border-radius: 4px;
-  padding: 10px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background: darken($color: #4DD599, $amount: 10);
+  }
 }

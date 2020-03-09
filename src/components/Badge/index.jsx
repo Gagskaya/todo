@@ -1,8 +1,9 @@
 import React from 'react'
 
-import './Badge.scss'
-export const Badge = ({color}) => {
+import "./Badge.scss"
+import classNames from 'classnames'
+export const Badge = ({color,className}) => {
     return (
-        <i className={`badge badge--${color}`}></i>
+        <i className={classNames('badge', `badge--${color}`, className)} ></i>
     )
 }
