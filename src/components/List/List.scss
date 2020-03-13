@@ -1,4 +1,5 @@
 .list {
+  cursor: pointer;
     &:first-child {
         margin-bottom: 40px;
     }
@@ -20,6 +21,13 @@
           svg {
             opacity: 0.5;
           }
+        }
+        p {
+          flex: 1;
+          text-overflow: ellipsis;
+          overflow: hidden; 
+          width: 160px; 
+          white-space: nowrap;
         }
         .remove-btn {
           position: absolute;

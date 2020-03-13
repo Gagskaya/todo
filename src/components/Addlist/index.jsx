@@ -1,23 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import "./AddList.scss"
-import { List } from '../List'
-import { Badge } from '../Badge'
-import { useState } from 'react'
+import { List, Badge } from './../../components'
 import closeSvg from './../../assets/img/close.svg'
 import axios from 'axios'
 export const AddList = ({ colors, onAdd }) => {
     const [selectedColor, selectColor] = useState(colors[0].id);
-    const [visiblePopup, setVisiblePopup] = useState(true);
+    const [visiblePopup, setVisiblePopup] = useState(false);
     const [inputValue, setInputValue] = useState("");
-    const [isLoading,setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const onClose = () => {
         setInputValue("");
         setVisiblePopup(false);
         selectColor(colors[0].id);
     }
     const addList = () => {
-        if(!inputValue) {
+        if (!inputValue) {
             alert("Введите название списка!");
             return;
         }
@@ -27,10 +25,10 @@ export const AddList = ({ colors, onAdd }) => {
             "colorId": selectedColor
         }).then(({ data }) => {
             const color = colors.find(color => color.id === selectedColor).name;
-            const listObj = {...data, color : { name : color}};
+            const listObj = { ...data, color: { name: color } };
             onAdd(listObj);
             onClose();
-        }).finally(()=> {
+        }).finally(() => {
             setIsLoading(false)
         })
     }
@@ -52,7 +50,7 @@ export const AddList = ({ colors, onAdd }) => {
                         colors.map(color => <li key={color.id} onClick={() => selectColor(color.id)}><Badge color={color.name} className={selectedColor === color.id && 'active'} /></li>)
                     }
                 </ul>
-                <button className="btn" onClick={addList}>{isLoading ? "Добавление...": "Добавить"}</button>
+                <button className="btn" onClick={addList}>{isLoading ? "Добавление..." : "Добавить"}</button>
                 <i onClick={onClose} className="close-btn"><img src={closeSvg} alt="close button" /></i>
             </div>}
         </div>

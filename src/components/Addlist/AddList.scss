@@ -1,7 +1,9 @@
 .todo__addlist {
     position: relative;
+    .list {
+        opacity: 0.4;
+    }
     ul {
-        opacity: 0.5;
         cursor: pointer;
         display: flex;
         justify-content: space-between;

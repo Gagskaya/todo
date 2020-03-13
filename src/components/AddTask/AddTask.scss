@@ -1,0 +1,38 @@
+.todo__addtask {
+    .list {
+        position: absolute;
+        left: 45px;
+        opacity: 0.4;
+        p {
+            font-size: 16px;
+        }
+        span {
+            position: relative;
+            top: 3px;
+            margin-right: 19px;
+        }
+    }
+    &-popup {
+        position: absolute;
+        bottom: 50px;
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+            opacity: 0.4;
+        }
+        .add-btn {
+            max-width: 145px;
+            margin-right: 9px;
+        }
+        .cancel-btn {
+            cursor: pointer;
+            padding: 10px 14px;
+            border: none;
+            background: #F4F6F8;
+            color: #9C9C9C;
+            font-size: 14px;
+            border-radius: 4px;
+        }
+    }
+}

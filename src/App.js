@@ -1,20 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './index.scss'
-import { List } from './components/List'
-import { AddList } from './components/AddList'
+import { List, AddList, Tasks } from './components'
 import axios from 'axios'
-import { useState } from 'react'
-import { useEffect } from 'react'
 
 export const App = () => {
     const [colors, setColors] = useState(null);
     const [lists, setLists] = useState(null);
+    const [activeItem, setActiveItem] = useState(null);
     useEffect(() => {
         axios.get('http://localhost:3001/colors').then(({ data }) => {
             setColors(data);
         });
-        axios.get('http://localhost:3001/lists?_expand=color').then(({ data }) => {
+        axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({ data }) => {
             setLists(data);
         });
     }, []);
@@ -29,6 +27,15 @@ export const App = () => {
         const newLists = lists.filter(list => list.id !== id);
         setLists(newLists);
     }
+    const onEditListTitle = (id, title) => {
+        const newList = lists.map(item => {
+            if (item.id === id) {
+                item.name = title
+            }
+            return item;
+        })
+        setLists(newList)
+    }
     return (
         <div className="todo">
             <div className="todo__sidebar">
@@ -40,9 +47,10 @@ export const App = () => {
                         name: "Все задачи"
                     }
                 ]} />
-                {lists ? <List items={lists} isRemovable onRemove={onRemove}/>: "Загрузка..." }
-                {colors && <AddList colors={colors} onAdd={onAdd}/>}
+                {lists ? <List items={lists} isRemovable onRemove={onRemove} showTasks={item => setActiveItem(item)} activeItem={activeItem} /> : "Загрузка..."}
+                {colors && <AddList colors={colors} onAdd={onAdd} />}
             </div>
+            {activeItem && lists && <Tasks list={activeItem} onEditTitle={onEditListTitle} />}
         </div>
     )
 }
