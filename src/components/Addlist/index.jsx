@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import "./AddList.scss"
-import { List, Badge } from './../../components'
+import { List, Badge } from '..'
 import closeSvg from './../../assets/img/close.svg'
 import axios from 'axios'
 export const AddList = ({ colors, onAdd }) => {

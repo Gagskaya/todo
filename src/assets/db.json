@@ -1,7 +1,7 @@
 {
   "lists": [
     {
-      "name": null,
+      "name": "Покупк",
       "colorId": 2,
       "id": 1
     },
@@ -15,6 +15,11 @@
       "name": "1212",
       "colorId": 3,
       "id": 3
+    },
+    {
+      "name": "123",
+      "colorId": 3,
+      "id": 4
     }
   ],
   "tasks": [

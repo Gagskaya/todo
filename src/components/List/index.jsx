@@ -14,7 +14,7 @@ export const List = ({ items, showPopup, isRemovable, onRemove, showTasks,active
     }
     return (
         <ul className="list" onClick={showPopup}>
-            {items.map((item, index) => <li onClick={()=> showTasks(item)} key={index} className={activeItem && activeItem.id === item.id ?  'active' : undefined}>
+            {items.map((item, index) => <li onClick={showTasks ?  ()=> showTasks(item): null} key={index} className={activeItem && activeItem.id === item.id ?  'active' : undefined}>
                 <span>
                     {item.icon ? item.icon : <Badge color={item.color.name} />}
                 </span>
