@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 
 import "./AddList.scss"
-import { List, Badge } from '..'
+import { Badge } from '..'
 import closeSvg from './../../assets/img/close.svg'
 import axios from 'axios'
-export const AddList = ({ colors, onAdd }) => {
+export const AddList = ({ colors, onAddList }) => {
     const [selectedColor, selectColor] = useState(colors[0].id);
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [inputValue, setInputValue] = useState("");
@@ -24,9 +24,9 @@ export const AddList = ({ colors, onAdd }) => {
             "name": inputValue,
             "colorId": selectedColor
         }).then(({ data }) => {
-            const color = colors.find(color => color.id === selectedColor).name;
-            const listObj = { ...data, color: { name: color } };
-            onAdd(listObj);
+            const color = colors.find(color => color.id === selectedColor);
+            const listObj = { ...data,color,tasks:[] };
+            onAddList(listObj);
             onClose();
         }).finally(() => {
             setIsLoading(false)
@@ -34,15 +34,15 @@ export const AddList = ({ colors, onAdd }) => {
     }
     return (
         <div className="todo__addlist">
-            <List items={[
-                {
-                    icon: <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ul className="list-add">
+                <li onClick={() => setVisiblePopup(true)}>
+                    <span><svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8 1V15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         <path d="M1 8H15" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>,
-                    name: "Добавить список"
-                }
-            ]} showPopup={() => setVisiblePopup(true)} />
+                    </svg></span>
+                    <p>Добавить список</p>
+                </li>
+            </ul>
             {visiblePopup && <div className="todo__addlist-popup">
                 <input type="text" placeholder="Название списка" value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
                 <ul className="todo__addlist-popup-colors">
@@ -56,3 +56,4 @@ export const AddList = ({ colors, onAdd }) => {
         </div>
     )
 }
+    

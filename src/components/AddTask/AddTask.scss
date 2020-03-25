@@ -1,20 +1,25 @@
 .todo__addtask {
-    .list {
-        position: absolute;
-        left: 45px;
+    position: relative;
+    .task-add {
         opacity: 0.4;
+        cursor: pointer;
+        li {
+            display: flex;
+        }
+        max-width: 170px;
+        &:hover {
+            opacity: 0.8;
+        }
         p {
             font-size: 16px;
         }
         span {
+            margin-right: 19px;
             position: relative;
             top: 3px;
-            margin-right: 19px;
         }
     }
     &-popup {
-        position: absolute;
-        bottom: 50px;
         input {
             width: 100%;
             padding: 10px 14px;
@@ -24,6 +29,10 @@
         .add-btn {
             max-width: 145px;
             margin-right: 9px;
+            min-width: 145px;
+            &:disabled {
+                background: #d8d8d8;
+            }
         }
         .cancel-btn {
             cursor: pointer;
@@ -33,6 +42,12 @@
             color: #9C9C9C;
             font-size: 14px;
             border-radius: 4px;
+            &:hover {
+                background: darken($color: #F4F6F8, $amount: 1);
+            }
+            &:active {
+                background: darken($color: #F4F6F8, $amount: 1.5);
+            }
         }
     }
 }

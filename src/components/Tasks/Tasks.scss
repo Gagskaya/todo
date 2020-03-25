@@ -1,7 +1,10 @@
 .todo__tasks {
-    position: relative;
+    &-wrap {
+        flex: 1;
+        overflow: auto;
+    }
     padding: 55px;
-    flex: 1;
+    height: auto;
     hr {
         margin-bottom: 30px;
     }
@@ -32,23 +35,85 @@
             }
         }
     }
-    .tasks__items-row {
-        display: flex;
-        margin-bottom: 10px;
+    .tasks__items {
+        &-row {
+            display: flex;
+            position: relative;
+            margin-bottom: 10px;
+            align-items: center;
+            &:hover {
+                .tasks__items-row-remove,.tasks__items-row-edit {
+                    opacity: 0.2;
+                }
+            }
+            &-edit {
+                right: 35px;
+                position: absolute;
+                cursor: pointer;
+                top: 12px;
+                opacity: 0;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            &-remove {
+                position: absolute;
+                right: 15px;
+                cursor: pointer;
+                top: 10px;
+                opacity: 0;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+            .tasks__items-row-remove:hover {
+                opacity: 0.8;
+            }
+        }
+        &-row {
+            display: flex;
+            position: relative;
+            margin-bottom: 10px;
+            align-items: center;
+            &:hover {
+                .tasks__items-row-remove,.tasks__items-row-edit {
+                    opacity: 0.2;
+                }
+            }
+            &-edit {
+                right: 35px;
+                position: absolute;
+                cursor: pointer;
+                top: 12px;
+                opacity: 0; 
+            }
+            &-remove {
+                position: absolute;
+                right: 15px;
+                cursor: pointer;
+                top: 10px;
+                opacity: 0; 
+            }
+            .tasks__items-row-remove:hover {
+                opacity: 0.8;
+            }
+            .tasks__items-row-edit:hover {
+                opacity: 0.8;
+            }
+        }
         &-title {
             font-size: 22px;
             color: #C9D1D3;
             position: absolute;
             font-family: 'Montserrat',sans-serif;
-            top: 50%;
+            top: 60%;
             left: 50%;
-            transform: translateX(-50%);
         }
         .checkbox {
             position: relative;
-            top: 2px;
+            top: -8px;
             input[type="checkbox"] {
-                display: none;
+                appearance: none;
                 &:checked + label {
                     background: #4DD599;
                     border-color: #4DD599;
@@ -72,6 +137,8 @@
                 width: 20px;
                 height: 20px;
                 cursor: pointer;
+                position: relative;
+                top: 1px;
                 &:hover {
                     background: #F2F2F2;
                     transition: 0.3s ease-in-out;

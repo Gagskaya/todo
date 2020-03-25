@@ -4,7 +4,8 @@ import './Tasks.scss'
 import editSvg from './../../assets/img/edit.svg'
 import axios from 'axios'
 import { AddTask } from '../AddTask'
-export const Tasks = ({ list, onEditTitle }) => {
+import { Task } from './Task'
+export const Tasks = ({ list, onEditTitle, onAddTask, withoutEmpty, onRemoveTask, onEditTaskTitle, onCompleteTask }) => {
     const editTitle = () => {
         const newTitle = window.prompt("Название списка", list.name);
         if (newTitle) {
@@ -16,30 +17,41 @@ export const Tasks = ({ list, onEditTitle }) => {
             alert("Не удалось обновить название списка")
         })
     }
+    const removeTask = (taskId) => {
+        if (window.confirm('Вы действительно хотите удалить список?')) {
+            onRemoveTask(list.id, taskId)
+        }
+    }
+    const editTask = (taskId, text) => {
+        const newTitle = window.prompt("Название задачи", text);
+        if (newTitle) {
+            onEditTaskTitle(taskId, list.id, newTitle);
+        }
+        axios.patch('http://localhost:3001/tasks/' + taskId, {
+            text: newTitle
+        })
+    }
+    const checkboxChange = (taskId,target) => {
+        axios.patch('http://localhost:3001/tasks/' + taskId, {
+            completed: target
+        })
+        onCompleteTask(taskId,list.id,target);
+    }
     return (
         <div className="todo__tasks">
             <div className="todo__tasks-title">
-                <h2>{list.name}</h2>
+                <h2 style={{ color: list.color.hex }}>{list.name}</h2>
                 <i><img onClick={editTitle} src={editSvg} alt="edit button" /></i>
             </div>
             <hr />
-            {!list.tasks.length && <h2 className="tasks__items-title">Задачи отсутствуют</h2>}
-            <div className="tasks__items" >
+            {list.tasks && <div className="tasks__items">
+                {!withoutEmpty && !list.tasks.length && <h2 className="tasks__items-title">Задачи отсутствуют</h2>}
                 {
-                    list.tasks.map(task => <div className="tasks__items-row" key={task.id}>
-                        <div className="checkbox">
-                            <input type="checkbox" id={`task-${task.id}`} />
-                            <label htmlFor={`task-${task.id}`}  >
-                                <svg width="12" height="12" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.29999 1.20001L3.79999 6.70001L1.29999 4.20001" stroke="#B3B3B3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                            </label>
-                        </div>
-                        <input type="text" readOnly value={task.text} />
-                    </div>)
+                    list.tasks.map(task => <Task key={task.id} checkboxChange={checkboxChange} {...task} removeTask={removeTask} editTask={editTask} />)
                 }
-                <AddTask />
-            </div>
+            </div>}
+            <AddTask key={list.id} list={list} onAddTask={onAddTask} />
         </div>
     )
 }
+

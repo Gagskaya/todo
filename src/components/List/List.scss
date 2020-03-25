@@ -1,13 +1,16 @@
-.list {
+.list-badge {
   cursor: pointer;
     &:first-child {
         margin-bottom: 40px;
     }
-     li {
-        padding: 10px 12px;
-        display: flex;
-        position: relative;
-
+     li { 
+        a {
+          padding: 10px 12px;
+          display: flex;
+          position: relative;
+          align-items: center;
+          color: #000;
+        }
         &:hover {
           background: rgba($color: #fff, $alpha: 0.2);
           .remove-btn {
@@ -16,8 +19,9 @@
         }
         span {
           position: relative;
-          top: 1px;
+          display: flex;
           margin-right: 8px;
+          top: 1px;
           svg {
             opacity: 0.5;
           }
@@ -40,4 +44,40 @@
           }
         }
       }
+}
+.list {
+  &-all {
+    li {
+      margin-bottom: 40px;
+    }
+    a {
+      display: flex;
+      padding: 10px 12px;
+  
+      span {
+        margin-right: 8px;
+        display: flex;
+        position: relative;
+        top: 1px;
+        svg {
+          opacity: 0.4;
+        }
+      }
+      p {
+        color: #000;
+      }
+    }
+  }
+  &-add {
+    position: relative;
+    left: -4px;
+    li {
+      display: flex;
+      opacity: 0.4;
+      padding: 10px 12px;
+      span {
+        margin-right: 8px;
+      }
+    }
+  }
 }
