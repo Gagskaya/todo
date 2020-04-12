@@ -3,28 +3,6 @@
     width: 10px;
     height: 10px;
     border-radius: 50px;
-    &--green {
-        background: #42B883;
-    }
-    &--blue {
-        background: #64C4ED;
-    }
-    &--pink {
-        background: #FFBBCC;
-    }
-    &--lime {
-        background: #B6E6BD;
-    }
-    &--grey {
-        background: #C9D1D3;
-    }
-    &--purple {
-        background: #C355F5;
-    }
-    &--black {
-        background: #09011A;
-    }
-    &--red {
-        background: #FF6464;
-    }
+    position: relative;
+    top: 5px;
 }

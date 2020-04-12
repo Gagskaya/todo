@@ -1,44 +1,39 @@
 .todo__addlist {
-    position: relative;
-    .list {
-        opacity: 0.4;
-    }
-    ul {
-        cursor: pointer;
-        display: flex;
-        justify-content: space-between;
-    }
+    margin-top: 20px;
+    margin-left: 10px;
     &-popup {
-        position: absolute;
-        top: 40px;
-        left: -15px;
-        padding: 18px 18px 15px 18px;
+        position: relative;
+        left: -25px;
+        top: 15px;
         width: 235px;
         height: 150px;
         background: #FFFFFF;
         box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.05);
         border-radius: 10px;
+        padding: 18px;
         input {
             width: 100%;
-            opacity: 0.3;
-            padding: 8px 11px;
+            padding: 8px 10px;
+            opacity: 0.4;
         }
         &-colors {
-            margin-top: 13px;
-            margin-bottom: 13px;
-        }
-        .badge {
-            width: 20px;
-            height: 20px;
-            &.active {
-              border: 2px solid #525252;
+            display: flex;
+            justify-content: space-between;
+            margin: 13px 0 13px 0;
+            .badge {
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+                &.active {
+                    border: 2px solid #525252;
+                }
             }
         }
-        .close-btn {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            cursor: pointer;
-        }
+    }
+    .close-btn {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        cursor: pointer;
     }
 }

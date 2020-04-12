@@ -1,120 +1,114 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { Route, useHistory } from 'react-router-dom'
+
 
 import './index.scss'
-import { List, AddList, Tasks } from './components'
-import axios from 'axios'
-import { Route, Link, useHistory } from 'react-router-dom'
-import classNames from 'classnames'
+import { List } from './components'
+import { AddList } from './components/AddList'
+import { Tasks } from './components/Tasks'
 
 export const App = () => {
-    const [colors, setColors] = useState(null);
     const [lists, setLists] = useState(null);
+    const [colors, setColors] = useState(null);
     const [activeItem, setActiveItem] = useState(null);
     let history = useHistory();
     useEffect(() => {
-        axios.get('http://localhost:3001/colors').then(({ data }) => {
-            setColors(data);
-        });
+        const listId = history.location.pathname.split('lists/')[1];
+        if (lists) {
+            const list = lists.find((list, index) => index + 1 === Number(listId));
+            setActiveItem(list);
+        }
+    }, [lists, history.location.pathname])
+    useEffect(() => {
         axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({ data }) => {
             setLists(data);
         });
+        axios.get(' http://localhost:3001/colors').then(({ data }) => {
+            setColors(data)
+        })
     }, []);
     const onAddList = (obj) => {
         const newList = [
             ...lists,
             obj
-        ]
-        setLists(newList);
+        ];
+        setLists(newList)
     }
     const onRemoveList = (id) => {
-        const newLists = lists.filter(item => item.id !== id);
-        setLists(newLists);
+        const newList = lists.filter(list => list.id !== id);
+        setLists(newList)
+
     }
-    const onRemoveTask = (listId, taskId) => {
-        axios.delete('http://localhost:3001/tasks/' + taskId);
-        const newList = lists.map(item => {
-            if (item.id === listId) {
-                item.tasks = item.tasks.filter(task => task.id !== taskId)
+    const onAddTask = (obj, listId) => {
+        const newList = lists.map(list => {
+            if (list.id === listId) {
+                list.tasks = [
+                    ...list.tasks,
+                    obj
+                ]
             }
-            return item;
-        })
-        setLists(newList);
-    }
-    const onEditListTitle = (id, title) => {
-        const newList = lists.map(item => {
-            if (item.id === id) {
-                item.name = title
-            }
-            return item;
+            return list;
         })
         setLists(newList)
     }
-    const onEditTaskTitle = (taskId, listId, text) => {
-        const newList = lists.map(item => {
-            if (item.id === listId) {
-                item.tasks = item.tasks.map(task => {
+    const onEditTitle = (listId, newTitle) => {
+        const newList = lists.map(list => {
+            if (list.id === listId) {
+                list.name = newTitle;
+            }
+            return list;
+        })
+        setLists(newList);
+    }
+    const onRemoveTask = (listId, taskId) => {
+        const newList = lists.map(list => {
+            if (listId === list.id) {
+                list.tasks = list.tasks.filter(task => task.id !== taskId)
+            }
+            return list;
+        });
+        setLists(newList);
+    }
+    const onEditTask = (listId, taskId, newTitle) => {
+        const newList = lists.map(list => {
+            if (list.id === listId) {
+                list.tasks.map(task => {
                     if (task.id === taskId) {
-                        task.text = text;
+                        task.text = newTitle;
                     }
                     return task;
                 })
             }
-            return item;
-        })
-        setLists(newList);
-    }
-    const onAddTask = (listId, obj) => {
-        const newTask = lists.map(item => {
-            if (listId === item.id) {
-                item.tasks = [
-                    ...item.tasks,
-                    obj
-                ]
-            }
-            return item;
-
-        })
-        setLists(newTask)
-    }
-    const onCompleteTask = (taskId, listId, target) => { 
-        const newList = lists.map (item => {
-            if (item.id === listId) {
-                item.tasks = item.tasks.map(task => {
-                    if (task.id === taskId) {
-                        task.completed = target;
-                    }
-                    return task;  
-                })
-            }
-            return item;
+            return list;
         })
         setLists(newList);
     }
     return (
         <div className="todo">
             <div className="todo__sidebar">
-                <ul className="list-all">
-                    <li>
-                        <Link to="/" className={classNames('list-all', history.location.pathname === "/" && 'active')}>
-                            <span>
-                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12.96 8.10001H7.74001C7.24321 8.10001 7.20001 8.50231 7.20001 9.00001C7.20001 9.49771 7.24321 9.90001 7.74001 9.90001H12.96C13.4568 9.90001 13.5 9.49771 13.5 9.00001C13.5 8.50231 13.4568 8.10001 12.96 8.10001V8.10001ZM14.76 12.6H7.74001C7.24321 12.6 7.20001 13.0023 7.20001 13.5C7.20001 13.9977 7.24321 14.4 7.74001 14.4H14.76C15.2568 14.4 15.3 13.9977 15.3 13.5C15.3 13.0023 15.2568 12.6 14.76 12.6ZM7.74001 5.40001H14.76C15.2568 5.40001 15.3 4.99771 15.3 4.50001C15.3 4.00231 15.2568 3.60001 14.76 3.60001H7.74001C7.24321 3.60001 7.20001 4.00231 7.20001 4.50001C7.20001 4.99771 7.24321 5.40001 7.74001 5.40001ZM4.86001 8.10001H3.24001C2.74321 8.10001 2.70001 8.50231 2.70001 9.00001C2.70001 9.49771 2.74321 9.90001 3.24001 9.90001H4.86001C5.35681 9.90001 5.40001 9.49771 5.40001 9.00001C5.40001 8.50231 5.35681 8.10001 4.86001 8.10001ZM4.86001 12.6H3.24001C2.74321 12.6 2.70001 13.0023 2.70001 13.5C2.70001 13.9977 2.74321 14.4 3.24001 14.4H4.86001C5.35681 14.4 5.40001 13.9977 5.40001 13.5C5.40001 13.0023 5.35681 12.6 4.86001 12.6ZM4.86001 3.60001H3.24001C2.74321 3.60001 2.70001 4.00231 2.70001 4.50001C2.70001 4.99771 2.74321 5.40001 3.24001 5.40001H4.86001C5.35681 5.40001 5.40001 4.99771 5.40001 4.50001C5.40001 4.00231 5.35681 3.60001 4.86001 3.60001Z" fill="black" />
-                                </svg>
-                            </span>
-                            <p>Все задачи</p></Link>
-
-                    </li>
-                </ul>
-                {lists ? <List items={lists} isRemovable onRemoveList={onRemoveList} showTasks={item => setActiveItem(item)} activeItem={activeItem} /> : "Загрузка..."}
+                <List items={
+                    [
+                        {
+                            icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12.96 8.10001H7.74001C7.24321 8.10001 7.20001 8.50231 7.20001 9.00001C7.20001 9.49771 7.24321 9.90001 7.74001 9.90001H12.96C13.4568 9.90001 13.5 9.49771 13.5 9.00001C13.5 8.50231 13.4568 8.10001 12.96 8.10001V8.10001ZM14.76 12.6H7.74001C7.24321 12.6 7.20001 13.0023 7.20001 13.5C7.20001 13.9977 7.24321 14.4 7.74001 14.4H14.76C15.2568 14.4 15.3 13.9977 15.3 13.5C15.3 13.0023 15.2568 12.6 14.76 12.6ZM7.74001 5.40001H14.76C15.2568 5.40001 15.3 4.99771 15.3 4.50001C15.3 4.00231 15.2568 3.60001 14.76 3.60001H7.74001C7.24321 3.60001 7.20001 4.00231 7.20001 4.50001C7.20001 4.99771 7.24321 5.40001 7.74001 5.40001ZM4.86001 8.10001H3.24001C2.74321 8.10001 2.70001 8.50231 2.70001 9.00001C2.70001 9.49771 2.74321 9.90001 3.24001 9.90001H4.86001C5.35681 9.90001 5.40001 9.49771 5.40001 9.00001C5.40001 8.50231 5.35681 8.10001 4.86001 8.10001ZM4.86001 12.6H3.24001C2.74321 12.6 2.70001 13.0023 2.70001 13.5C2.70001 13.9977 2.74321 14.4 3.24001 14.4H4.86001C5.35681 14.4 5.40001 13.9977 5.40001 13.5C5.40001 13.0023 5.35681 12.6 4.86001 12.6ZM4.86001 3.60001H3.24001C2.74321 3.60001 2.70001 4.00231 2.70001 4.50001C2.70001 4.99771 2.74321 5.40001 3.24001 5.40001H4.86001C5.35681 5.40001 5.40001 4.99771 5.40001 4.50001C5.40001 4.00231 5.35681 3.60001 4.86001 3.60001Z" fill="black" />
+                            </svg>,
+                            name: 'Все задачи'
+                        }
+                    ]
+                } showTasks={() => history.push(`/`)} activeItem={activeItem} active={!activeItem} />
+                {lists ? <List items={lists} onRemoveList={onRemoveList} showTasks={id => history.push(`/lists/${id}`)} activeItem={activeItem} isRemovable isCountable /> : 'Загрузка...'}
                 {colors && <AddList colors={colors} onAddList={onAddList} />}
             </div>
             <div className="todo__tasks-wrap">
                 <Route exact path="/">
                     {
-                        lists && lists.map(list => <Tasks key={list.id} list={list} onEditTaskTitle={onEditTaskTitle} onRemoveTask={onRemoveTask} onEditTitle={onEditListTitle} onAddTask={onAddTask} withoutEmpty />)
+                        lists && lists.map(list => <Tasks list={list} key={list.id} withoutEmpty onAddTask={onAddTask} onEditTitle={onEditTitle} onRemoveTask={onRemoveTask} onEditTask={onEditTask} />)
                     }
                 </Route>
-                <Route path="/lists/:id">{activeItem && lists && <Tasks list={activeItem} onCompleteTask={onCompleteTask} onEditTaskTitle={onEditTaskTitle} onRemoveTask={onRemoveTask} onEditTitle={onEditListTitle} onAddTask={onAddTask} />}</Route>
+                <Route path="/lists/:id">
+                    {activeItem && lists && <Tasks key={activeItem.id} list={activeItem} onAddTask={onAddTask} onEditTitle={onEditTitle} onRemoveTask={onRemoveTask} onEditTask={onEditTask} />}
+                </Route>
             </div>
         </div>
     )
