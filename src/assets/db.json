@@ -4,26 +4,9 @@
       "id": 1,
       "name": "Продажи",
       "colorId": 5
-    },
-    {
-      "id": 2,
-      "name": "Фронтенд",
-      "colorId": 4
     }
   ],
   "tasks": [
-    {
-      "listId": 2,
-      "text": "123",
-      "completed": false,
-      "id": 2
-    },
-    {
-      "listId": 2,
-      "text": "123",
-      "completed": false,
-      "id": 3
-    },
     {
       "listId": 1,
       "text": "123",
