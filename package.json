@@ -21,8 +21,7 @@
     "redux": "^4.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "startWithDb": "concurrently \"npm start\" \"npm run fake-json\"",
+    "start": "concurrently \"react-scripts start\" \"npm run fake-json\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
